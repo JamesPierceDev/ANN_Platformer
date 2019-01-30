@@ -1,0 +1,7 @@
+C:\Users\james\Desktop\dataGen\dataGen\bin\Debug\dataGen.exe.config
+C:\Users\james\Desktop\dataGen\dataGen\bin\Debug\dataGen.exe
+C:\Users\james\Desktop\dataGen\dataGen\bin\Debug\dataGen.pdb
+C:\Users\james\Desktop\dataGen\dataGen\obj\Debug\dataGen.csprojAssemblyReference.cache
+C:\Users\james\Desktop\dataGen\dataGen\obj\Debug\dataGen.csproj.CoreCompileInputs.cache
+C:\Users\james\Desktop\dataGen\dataGen\obj\Debug\dataGen.exe
+C:\Users\james\Desktop\dataGen\dataGen\obj\Debug\dataGen.pdb

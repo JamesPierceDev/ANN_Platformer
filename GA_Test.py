@@ -4,14 +4,21 @@ import numpy as np
 
 #X - (current state, distance to cactus) y - (action to do 1/0) 
 #Current state(0=neutral, 1=jumping) action(0=nothing, 1=jump)
-X = np.array(([1, 10], [0, 2], [1, 25]), dtype=float)
-y = np.array(([1], [0], [0]), dtype=float)
-xPred = np.array(([1]), dtype=float)
+
+
+#X = np.loadtxt("training_data.txt",delimiter=",")
+#X = np.array(([1, 10], [0, 2], [1, 25]), dtype=float)
+#y = np.array(([1], [0.5], [0]), dtype=float)
+#xPred = np.array([0, 5], dtype=float)
+
+X = np.array(([2,9],[1,5],[3,6]), dtype=float)
+y = np.array(([92],[86],[89]), dtype=float)
+xPred = np.array(([4,8]), dtype=float)
 
 #scaling units
 X = X/np.amax(X, axis=0) #Max of array
 xPred = xPred/np.amax(xPred, axis=0)
-y = y/1
+y = y/100
 
 class Neural_Network(object):
     def __init__(self):
@@ -56,9 +63,8 @@ class Neural_Network(object):
         self.backward(X, y, o)
 
     def saveWeights(self):
-        a = 5
-        #np.saveTxt("W1.txt", self.W1, fmt="%s")
-        #np.saveTxt("W2.txt", self.W2, fmt="%s")
+        np.savetxt("W1.txt", self.W1, fmt="%s")
+        np.savetxt("W2.txt", self.W2, fmt="%s")
 
     def predict(self):
         print("Predicted data based on trained weights: ")
@@ -66,7 +72,7 @@ class Neural_Network(object):
         print("Output: \n", str(self.forward(xPred)))
 
 NN = Neural_Network()
-for i in range(1000): #train the Net over 1000 epochs
+for i in range(500000): #train the Net over 1000 epochs
     print("# " + str(i), "\n")
     print("Input (scaled): \n", str(X))
     print("Actual Output: \n", str(y))
@@ -75,5 +81,5 @@ for i in range(1000): #train the Net over 1000 epochs
     print("\n")
     NN.train(X, y)
 
-#NN.saveWeights()
+NN.saveWeights()
 NN.predict()
