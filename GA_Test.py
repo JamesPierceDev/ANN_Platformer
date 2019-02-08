@@ -5,15 +5,10 @@ import numpy as np
 #X - (current state, distance to cactus) y - (action to do 1/0) 
 #Current state(0=neutral, 1=jumping) action(0=nothing, 1=jump)
 
-
 #X = np.loadtxt("training_data.txt",delimiter=",")
 X = np.array(([1, 10], [0, 2], [1, 25]), dtype=float)
 y = np.array(([100], [50], [0]), dtype=float)
 xPred = np.array([0, 5], dtype=float)
-
-# X = np.array(([2,9],[1,5],[3,6]), dtype=float)
-# y = np.array(([92],[86],[89]), dtype=float)
-# xPred = np.array(([4,8]), dtype=float)
 
 #scaling units
 X = X/np.amax(X, axis=0) #Max of array
