@@ -1,5 +1,6 @@
 
 import Population
+import Individual
 
 class Algorithm:
     uniformRate = 0.5
@@ -30,3 +31,12 @@ class Algorithm:
 
         return newPopulation
         
+    def crossover(indiv1, indiv2):
+        newSolution = Individual
+
+        for i in range(indiv1.size()):
+            if random.randrange() <= uniformRate:
+                newSolution.setGene(i, indiv1.getGene(i))
+            else:
+                newSolution.setGene(i, indiv2.getGene(i))
+        return newSolution

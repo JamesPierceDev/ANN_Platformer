@@ -4,8 +4,12 @@ class Population:
 
     individuals = []
 
-    def __init__(self, populationSize, initialise):
-        individuals = new Individual[populationSize]
+    def size():
+        return len(individuals)
+
+    def __init__(self, population_size, initialise):
+        for i in range(population_size):
+            individuals[i] = Individual()
 
         if initialise:
             for i in range(size()):
@@ -25,8 +29,6 @@ class Population:
         
         return fittest
     
-    def size():
-        return len(individuals)
 
-    def saveIndividual(index, indiv):
+    def save_individual(self, index, indiv):
         individuals[index] = indiv
