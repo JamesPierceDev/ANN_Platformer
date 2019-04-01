@@ -110,5 +110,4 @@ namespace GeneticAlgorithm
             return fittest;
         }
     }
-
 }
