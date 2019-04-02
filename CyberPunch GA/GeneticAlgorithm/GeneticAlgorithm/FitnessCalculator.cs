@@ -8,7 +8,6 @@ namespace GeneticAlgorithm
 {
     class FitnessCalculator
     {
-        //Temp - replace hardcoded index value
         static byte[] solution = new byte[Individual.GetDefaultGeneLength()];
 
         public static void SetSolution(String newSolution)

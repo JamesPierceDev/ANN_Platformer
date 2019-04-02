@@ -45,6 +45,7 @@
     <Compile Include="Algorithm.cs" />
     <Compile Include="FitnessCalculator.cs" />
     <Compile Include="Individual.cs" />
+    <Compile Include="Perceptron.cs" />
     <Compile Include="Population.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
