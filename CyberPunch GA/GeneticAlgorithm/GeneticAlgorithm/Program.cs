@@ -10,6 +10,18 @@ namespace GeneticAlgorithm
     {
         static void Main(string[] args)
         {
+            MLP testMLP = new MLP(2, 3, 1);
+
+            testMLP.AddInput(0, 10.5f);
+            testMLP.AddInput(1, 7.25f);
+            testMLP.GenerateOutput();
+            System.Console.WriteLine("MLP output: " + testMLP.m_out);
+
+            System.Console.ReadLine();
+        }
+
+        void RunGA()
+        {
             FitnessCalculator.SetSolution("1111000000000001111000000000000000000000000000000000000000001111");
 
             Population pop = new Population(50, true);
@@ -26,8 +38,6 @@ namespace GeneticAlgorithm
             System.Console.WriteLine("Generation: " + epoch);
             System.Console.WriteLine("Genes:");
             System.Console.WriteLine(pop.GetFittest());
-
-            System.Console.ReadLine();
         }
     }
 }

@@ -9,13 +9,14 @@ namespace GeneticAlgorithm
     class Perceptron
     {
         Random rndgen;
-        float[] m_inputs = new float[2]; //input neurons
-        int[] m_outputs; //output neurons
-        int m_input_size;
+        int activeInputs = 0;
+        float[] m_inputs; //input neurons
+        float m_output; //output neurons
+        public int m_input_size;
         double[] m_weights; //Weights 
-        double learningRate; //Learning rate constant for learning rule
-        double threshold; //Threshold value for T function
-        double totalError; //Error count for ranking neurons
+        readonly double learningRate; //Learning rate constant for learning rule
+        readonly double threshold; //Threshold value for T function
+        readonly double totalError; //Error count for ranking neurons
 
         /// <summary>
         /// Perceptron constructor takes a number of inputs
@@ -25,10 +26,11 @@ namespace GeneticAlgorithm
         /// <param name="n_inputs"></param>
         /// <param name="n_iter"></param>
         /// <param name="l_rate"></param>
-        public Perceptron(int n_inputs, int l_rate)
+        public Perceptron(int n_inputs, double l_rate)
         {
             m_input_size = n_inputs;
             m_inputs = new float[n_inputs];
+            m_weights = new double[n_inputs];
             learningRate = l_rate;
             rndgen = new Random();
             RandomiseWeights();
@@ -42,6 +44,20 @@ namespace GeneticAlgorithm
         float Sigmoid(float x)
         {
             return (float)(1 / (1 + Math.Exp(-x)));
+        }
+
+        /// <summary>
+        /// Sets the values of the inputs
+        /// </summary>
+        /// <param name="m_in"></param>
+        public void SetInput(int index, float value)
+        {
+            m_inputs[index] = value;
+        }
+
+        public float GetOutput()
+        {
+            return m_output;
         }
 
         /// <summary>
@@ -68,46 +84,46 @@ namespace GeneticAlgorithm
             }
         }
 
-        float[] Threshold()
+        public void Sum()
         {
+            activeInputs++;
             //Sum the inputs and weights
-            float[] hx = new float[2];
+            float hx = 0;
            
-            for (byte i = 0; i < m_input_size; i++)
+            if (activeInputs == m_input_size)
             {
-                hx[i] = m_inputs[0] * (float)m_weights[0] + m_inputs[1] * (float)m_weights[1];
-
-                for (byte j = 0; j < m_inputs.Length; j++)
-                {
-                    hx[i] = m_inputs[i] * (float)m_weights[i] + m_inputs[j] * (float)m_weights[j];
-                }
+                //Return hx passed through sigmoid activation function
+                hx += m_inputs[activeInputs] * (float)m_weights[activeInputs];
+                m_output = Sigmoid(hx);
             }
-            //Return hx passed through sigmoid activation function
-            return Sigmoid(hx);
+            else
+            {
+                hx += m_inputs[activeInputs] * (float)m_weights[activeInputs];
+            }
         }
 
         /// <summary>
         /// Implementation of the
         /// Perceptron Learning Rule
         /// </summary>
-        void Train()
+        public void Train()
         {
             //Compute perceptron output
-            float output = Threshold();
-            float desired = 0;
+            //float desired = 0; // Some value from GA
 
-            if (output == desired)
-            {
-                System.Console.WriteLine("Dataset match");
-            }
-            else
-            {
-                //Adjust weights with learning rule
-                for (byte i = 0; i < m_weights.Length; i++)
-                {
-                    m_weights[i] = m_weights[i] * learningRate * (desired - output) * m_inputs[i];
-                }
-            }
+            //If actual value matches expected value
+            //if (output == desired)
+            //{
+            //    System.Console.WriteLine("Dataset match");
+            //}
+            //else //If there is a difference
+            //{
+            //    //Adjust weights with learning rule
+            //    for (byte i = 0; i < m_weights.Length; i++)
+            //    {
+            //        m_weights[i] = m_weights[i] * learningRate * (desired - output) * m_inputs[i];
+            //    }
+            //}
         }
     }
 }
