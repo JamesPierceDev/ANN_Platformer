@@ -77,7 +77,14 @@ namespace GeneticAlgorithm
                 {
                     m_output_layer[i].SetInput(j, m_hidden_layer[j].GetOutput());
                 }
-                m_output_layer[i].Sum();
+            }
+
+            for (byte i = 0; i < n_output; i++)
+            {
+                for (byte j = 0; j < m_output_layer[i].m_input_size; j++)
+                {
+                    m_output_layer[i].Sum();
+                }
             }
             m_out = m_output_layer[0].GetOutput();   
         }

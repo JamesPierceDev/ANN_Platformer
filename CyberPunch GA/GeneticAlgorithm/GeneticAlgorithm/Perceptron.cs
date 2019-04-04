@@ -87,29 +87,19 @@ namespace GeneticAlgorithm
 
         public void Sum()
         {
-            
-            //Sum the inputs and weights
+            activeInputs++;
 
-           
-            if (m_input_size > 1)
-            {   
-                if (activeInputs == m_input_size)
-                {
-                    //Return hx passed through sigmoid activation function
-                    hx += m_inputs[activeInputs] * (float)m_weights[activeInputs];
-                    m_output = Sigmoid(hx);
-                }
-                else
-                {
-                    hx += m_inputs[activeInputs] * (float)m_weights[activeInputs];
-                }
+            if (activeInputs == m_input_size)
+            {
+                //Return hx passed through sigmoid activation function
+                hx += m_inputs[activeInputs - 1] * (float)m_weights[activeInputs - 1];
+                m_output = Sigmoid(hx);
             }
             else
             {
+                //Sum the inputs and weights
                 hx += m_inputs[activeInputs] * (float)m_weights[activeInputs];
-                m_output = Sigmoid(hx);
             }
-            activeInputs++;
         }
 
         /// <summary>
