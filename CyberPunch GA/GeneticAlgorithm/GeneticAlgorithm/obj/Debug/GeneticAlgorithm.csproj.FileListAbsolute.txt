@@ -5,3 +5,10 @@ C:\Users\james\Desktop\ANN_Platformer\CyberPunch GA\GeneticAlgorithm\GeneticAlgo
 C:\Users\james\Desktop\ANN_Platformer\CyberPunch GA\GeneticAlgorithm\GeneticAlgorithm\obj\Debug\GeneticAlgorithm.csproj.CoreCompileInputs.cache
 C:\Users\james\Desktop\ANN_Platformer\CyberPunch GA\GeneticAlgorithm\GeneticAlgorithm\obj\Debug\GeneticAlgorithm.exe
 C:\Users\james\Desktop\ANN_Platformer\CyberPunch GA\GeneticAlgorithm\GeneticAlgorithm\obj\Debug\GeneticAlgorithm.pdb
+C:\Users\James\Documents\ANN_Platformer\CyberPunch GA\GeneticAlgorithm\GeneticAlgorithm\bin\Debug\GeneticAlgorithm.exe.config
+C:\Users\James\Documents\ANN_Platformer\CyberPunch GA\GeneticAlgorithm\GeneticAlgorithm\bin\Debug\GeneticAlgorithm.exe
+C:\Users\James\Documents\ANN_Platformer\CyberPunch GA\GeneticAlgorithm\GeneticAlgorithm\bin\Debug\GeneticAlgorithm.pdb
+C:\Users\James\Documents\ANN_Platformer\CyberPunch GA\GeneticAlgorithm\GeneticAlgorithm\obj\Debug\GeneticAlgorithm.csprojAssemblyReference.cache
+C:\Users\James\Documents\ANN_Platformer\CyberPunch GA\GeneticAlgorithm\GeneticAlgorithm\obj\Debug\GeneticAlgorithm.csproj.CoreCompileInputs.cache
+C:\Users\James\Documents\ANN_Platformer\CyberPunch GA\GeneticAlgorithm\GeneticAlgorithm\obj\Debug\GeneticAlgorithm.exe
+C:\Users\James\Documents\ANN_Platformer\CyberPunch GA\GeneticAlgorithm\GeneticAlgorithm\obj\Debug\GeneticAlgorithm.pdb

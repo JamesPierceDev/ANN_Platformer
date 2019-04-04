@@ -46,12 +46,37 @@ namespace GeneticAlgorithm
 
         public void GenerateOutput()
         {
+            for (byte i = 0; i < n_input; i++)
+            {
+                for (byte j = 0; j < m_inputs_layer[i].m_input_size; j++)
+                {
+                    m_inputs_layer[i].Sum();
+                }
+            }
+
             for (byte i = 0; i < n_hidden; i++)
             {
-                m_hidden_layer[i].Sum();
+                for (byte j = 0; j < n_input; j++)
+                {
+                    m_hidden_layer[i].SetInput(j, m_inputs_layer[j].GetOutput());
+                }
+
             }
+
+            for (byte i = 0; i < n_hidden; i++)
+            {
+                for (byte j = 0; j < m_hidden_layer[i].m_input_size; j++)
+                {
+                    m_hidden_layer[i].Sum();
+                }
+            }
+
             for (byte i = 0; i < n_output; i++)
             {
+                for (byte j = 0; j < n_hidden; j++)
+                {
+                    m_output_layer[i].SetInput(j, m_hidden_layer[j].GetOutput());
+                }
                 m_output_layer[i].Sum();
             }
             m_out = m_output_layer[0].GetOutput();   

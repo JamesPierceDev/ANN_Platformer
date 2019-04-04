@@ -17,6 +17,7 @@ namespace GeneticAlgorithm
         readonly double learningRate; //Learning rate constant for learning rule
         readonly double threshold; //Threshold value for T function
         readonly double totalError; //Error count for ranking neurons
+        float hx = 0;
 
         /// <summary>
         /// Perceptron constructor takes a number of inputs
@@ -86,20 +87,29 @@ namespace GeneticAlgorithm
 
         public void Sum()
         {
-            activeInputs++;
+            
             //Sum the inputs and weights
-            float hx = 0;
+
            
-            if (activeInputs == m_input_size)
-            {
-                //Return hx passed through sigmoid activation function
-                hx += m_inputs[activeInputs] * (float)m_weights[activeInputs];
-                m_output = Sigmoid(hx);
+            if (m_input_size > 1)
+            {   
+                if (activeInputs == m_input_size)
+                {
+                    //Return hx passed through sigmoid activation function
+                    hx += m_inputs[activeInputs] * (float)m_weights[activeInputs];
+                    m_output = Sigmoid(hx);
+                }
+                else
+                {
+                    hx += m_inputs[activeInputs] * (float)m_weights[activeInputs];
+                }
             }
             else
             {
                 hx += m_inputs[activeInputs] * (float)m_weights[activeInputs];
+                m_output = Sigmoid(hx);
             }
+            activeInputs++;
         }
 
         /// <summary>
