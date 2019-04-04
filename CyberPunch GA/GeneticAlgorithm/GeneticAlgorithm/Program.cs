@@ -24,7 +24,7 @@ namespace GeneticAlgorithm
         {
             FitnessCalculator.SetSolution("1111000000000001111000000000000000000000000000000000000000001111");
 
-            Population pop = new Population(50, true);
+            Population pop = new Population(6, true);
 
             int epoch = 0;
             while (pop.GetFittest().GetFitness() < FitnessCalculator.GetMaxFitness())

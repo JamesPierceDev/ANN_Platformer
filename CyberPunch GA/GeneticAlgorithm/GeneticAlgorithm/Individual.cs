@@ -9,7 +9,7 @@ namespace GeneticAlgorithm
     class Individual
     {
         static int defaultGeneLength = 64;
-        private byte[] genes = new byte[defaultGeneLength];
+        private double[] genes = new double[defaultGeneLength];
         Random rndgen = new Random();
 
         private int fitness = 0;
@@ -24,6 +24,11 @@ namespace GeneticAlgorithm
                 byte gene = (byte)Math.Round((float)rndgen.Next(0, 2));
                 genes[i] = gene;
             }
+        }
+
+        public void SetIndividual(double[] values)
+        {
+            genes = values;
         }
 
         /// <summary>
@@ -49,7 +54,7 @@ namespace GeneticAlgorithm
         /// </summary>
         /// <param name="index"></param>
         /// <returns></returns>
-        public byte GetGene(int index)
+        public double GetGene(int index)
         {
             return genes[index];
         }

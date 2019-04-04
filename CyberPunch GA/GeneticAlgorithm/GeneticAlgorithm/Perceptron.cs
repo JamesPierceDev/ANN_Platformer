@@ -13,7 +13,8 @@ namespace GeneticAlgorithm
         float[] m_inputs; //input neurons
         float m_output; //output neurons
         public int m_input_size;
-        double[] m_weights; //Weights 
+        //double[] m_weights; //Weights 
+        List<double> m_weights;
         readonly double learningRate; //Learning rate constant for learning rule
         readonly double threshold; //Threshold value for T function
         readonly double totalError; //Error count for ranking neurons
@@ -31,7 +32,8 @@ namespace GeneticAlgorithm
         {
             m_input_size = n_inputs;
             m_inputs = new float[n_inputs];
-            m_weights = new double[n_inputs];
+            //m_weights = new double[n_inputs];
+            m_weights = new List<double>();
             learningRate = l_rate;
             rndgen = new Random();
             RandomiseWeights();
@@ -56,9 +58,33 @@ namespace GeneticAlgorithm
             m_inputs[index] = value;
         }
 
+        /// <summary>
+        /// Returns the single activated
+        /// outputs as a float
+        /// </summary>
+        /// <returns></returns>
         public float GetOutput()
         {
             return m_output;
+        }
+
+        /// <summary>
+        /// Returns the array of connection
+        /// weights as an array of doubles
+        /// </summary>
+        /// <returns></returns>
+        public List<double> GetWeights()
+        {
+            return m_weights;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="w"></param>
+        public void UpdateWeights(List<double> w)
+        {
+            m_weights = w;
         }
 
         /// <summary>
@@ -79,7 +105,7 @@ namespace GeneticAlgorithm
         void RandomiseWeights()
         {
             //Loop through weights giving them random values
-            for (byte i = 0; i < m_weights.Length; i++)
+            for(byte i = 0; i < m_input_size; i++)
             {
                 m_weights[i] = rndgen.NextDouble();
             }
@@ -94,6 +120,7 @@ namespace GeneticAlgorithm
                 //Return hx passed through sigmoid activation function
                 hx += m_inputs[activeInputs - 1] * (float)m_weights[activeInputs - 1];
                 m_output = Sigmoid(hx);
+                //m_output = Relu(hx);
             }
             else
             {
@@ -103,27 +130,12 @@ namespace GeneticAlgorithm
         }
 
         /// <summary>
-        /// Implementation of the
-        /// Perceptron Learning Rule
+        /// Utilises a Genetic Algorithm to train
+        /// the perceptron weights
         /// </summary>
         public void Train()
         {
-            //Compute perceptron output
-            //float desired = 0; // Some value from GA
-
-            //If actual value matches expected value
-            //if (output == desired)
-            //{
-            //    System.Console.WriteLine("Dataset match");
-            //}
-            //else //If there is a difference
-            //{
-            //    //Adjust weights with learning rule
-            //    for (byte i = 0; i < m_weights.Length; i++)
-            //    {
-            //        m_weights[i] = m_weights[i] * learningRate * (desired - output) * m_inputs[i];
-            //    }
-            //}
+            //Set population to a concatenation of the weight values
         }
     }
 }

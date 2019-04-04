@@ -31,6 +31,24 @@ namespace GeneticAlgorithm
         }
 
         /// <summary>
+        /// Overloaded constructor that takes an array
+        /// of doubles at the population
+        /// </summary>
+        /// <param name="populationSize"></param>
+        /// <param name="values"></param>
+        public Population(int populationSize, double[] values)
+        {
+            individuals = new Individual[populationSize];
+
+            for (int i = 0; i < Size(); i++)
+            {
+                Individual newIndiv = new Individual();
+                newIndiv.SetIndividual(values);
+                SaveIndividual(i, newIndiv);
+            }
+        }
+
+        /// <summary>
         /// Return the individual at the given index
         /// </summary>
         /// <param name="index"></param>
