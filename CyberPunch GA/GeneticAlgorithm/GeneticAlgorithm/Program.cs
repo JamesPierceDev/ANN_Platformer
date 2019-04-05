@@ -11,9 +11,9 @@ namespace GeneticAlgorithm
         static void Main(string[] args)
         {
             MLP testMLP = new MLP(2, 3, 1);
-
-            testMLP.AddInput(0, 10.5f);
-            testMLP.AddInput(1, 7.25f);
+            Random rndgen = new Random();
+            testMLP.AddInput(0, (float)rndgen.NextDouble());
+            testMLP.AddInput(1, (float)rndgen.NextDouble());
             testMLP.GenerateOutput();
             System.Console.WriteLine("MLP output: " + testMLP.m_out);
 
