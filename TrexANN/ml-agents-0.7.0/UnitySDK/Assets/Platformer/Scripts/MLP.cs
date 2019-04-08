@@ -12,7 +12,6 @@ public class MLP
     List<Perceptron> m_inputs_layer = new List<Perceptron>();
     List<Perceptron> m_hidden_layer = new List<Perceptron>();
     List<Perceptron> m_output_layer = new List<Perceptron>();
-    SortedDictionary<string, double> m_weights;
     public float m_out;
 
     /// <summary>
@@ -32,12 +31,12 @@ public class MLP
         }
         for (byte i = 0; i < n_hidden; i++)
         {
-            string s = "Perceptron" + i;
-            m_hidden_layer.Add(new Perceptron(n_input, learning_rate, s));
+            string s = "P" + i;
+            m_hidden_layer.Add(new Perceptron(n_hidden, learning_rate, s));
         }
         for (byte i = 0; i < n_output; i++)
         {
-            string s = "Perceptron" + i;
+            string s = "P" + i;
             m_output_layer.Add(new Perceptron(n_hidden, learning_rate, s));
         }
     }
@@ -59,8 +58,11 @@ public class MLP
         {
             for (byte j = 0; j < n_input; j++)
             {
-                m_hidden_layer[i].SetInput(j, m_inputs_layer[j].GetOutput());
-            }
+                for (byte k = 0; k < n_hidden; k++)
+                {
+                    m_hidden_layer[i].SetInput(k, m_inputs_layer[j].GetOutput() * (float)m_hidden_layer[i].GetWeights()[k]);
+                }
+            }   
         }
 
         for (byte i = 0; i < n_hidden; i++)
@@ -76,6 +78,7 @@ public class MLP
             for (byte j = 0; j < n_hidden; j++)
             {
                 m_output_layer[i].SetInput(j, m_hidden_layer[j].GetOutput());
+               // Debug.Log("Hidden Layer output: " + m_hidden_layer[j].GetOutput());
             }
         }
 
@@ -87,6 +90,7 @@ public class MLP
             }
         }
         m_out = m_output_layer[0].GetOutput();
+        Debug.Log("Output: " + m_out);
         return m_output_layer[0].GetOutput();
     }
 

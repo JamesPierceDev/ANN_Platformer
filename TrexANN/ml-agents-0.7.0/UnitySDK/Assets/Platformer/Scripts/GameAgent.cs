@@ -52,16 +52,15 @@ public class GameAgent : MonoBehaviour
             float val = Mathf.Abs(RayCast());
             if (m_net.GenerateOutput() > 0.5 && val < 1)
             {
-                rb.AddForce(new Vector2(0, 100));
+                rb.AddForce(new Vector2(0, 35   ));
             }
-            Debug.Log("Output: " + m_net.m_out);
             m_outputText.text = "Network output: " + m_net.m_out.ToString();
         }
         else
         {
             fitness = (int)score;
             score = 0f;
-            Reset();
+            this.gameObject.SetActive(false);
         }
     }
 
@@ -93,7 +92,7 @@ public class GameAgent : MonoBehaviour
         }
 
         //If not hit, return near infinite value of Integer max bounds
-        return int.MaxValue;
+        return 0;
     }
 
     float RayCastHorizontal()

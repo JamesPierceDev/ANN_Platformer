@@ -7,8 +7,6 @@ public class Population : MonoBehaviour
 {   
     public int populationSize;
     public bool initialise;
-    //List<GameAgent> m_agents = new List<GameAgent>();
-    //public List<GameObject> m_objs = new List<GameObject>();
     public List<GameObject> m_agents = new List<GameObject>();
     int size = 0;
     private const float mutationRate = 0.2f;
@@ -22,11 +20,6 @@ public class Population : MonoBehaviour
     {
         //m_agents = new List<GameAgent>();
         size = populationSize;
-
-        for (int i = 0; i < size; i++)
-        {
-           // m_agents.Add(m_objs[i].GetComponent<GameAgent>());
-        }
     }
 
     /// <summary>
@@ -37,6 +30,11 @@ public class Population : MonoBehaviour
         for (int i = 0; i < size; i++)
         {
             m_agents[i].GetComponent<GameAgent>().UpdateAgent();
+            if (m_agents[i].activeSelf)
+            {
+                continue;
+            }
+
         }
         Evolve();
     }

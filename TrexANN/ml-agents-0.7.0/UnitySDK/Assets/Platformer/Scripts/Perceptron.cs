@@ -115,8 +115,9 @@ public class Perceptron
         {
             //Return hx passed through sigmoid activation function
             hx += m_inputs[activeInputs - 1] * (float)m_weights[activeInputs - 1];
-            m_output = Sigmoid(hx);
-            //m_output = Relu(hx);
+            //m_output = Sigmoid(hx);
+            m_output = Relu(hx / 10000);
+            //m_output = hx;
         }
         else if (activeInputs > m_input_size)
         {
