@@ -10,11 +10,11 @@ public class Population : MonoBehaviour
     public bool initialise;
     public List<GameObject> m_agents = new List<GameObject>();
     int size = 0;
-    private const float mutationRate = 0.2f;
-    private const float crossoverRate = 0.8f;
+    private const float mutationRate = 0.5f;
+    private const float crossoverRate = 0.2f;
     int generation = 0;
-    readonly int tournamentSize = 3;
-    private readonly bool elitism = false;
+    int tournamentSize = 3;
+    private readonly bool elitism = true;
     System.Random rndgen = new System.Random();
     int agentsAlive;
     public Text m_agentsAliveText;
@@ -31,7 +31,6 @@ public class Population : MonoBehaviour
     /// </summary>
     void Start()
     {
-        //m_agents = new List<GameAgent>();
         size = populationSize;
         agentsAlive = size;
     }
@@ -63,13 +62,17 @@ public class Population : MonoBehaviour
         if (m_agents.Count < 1)
         {
             Reset();
+            if (m_agents[GetFittest()].GetComponent<GameAgent>().GetFitness() < 100)
+            {
+                Evolve();
+                if (initialisedAgents > m_agents.Count && m_agents.Count > 0)
+                {
+                    
+                }
+            }
         }
-        
-        if (initialisedAgents > m_agents.Count && agentsAlive > 0)
-        {
-            Evolve();
-        }
-        m_scoreText.text = "Score: " + (int)m_score;
+     
+        m_scoreText.text = "Score: " + m_score;
         m_highScoreText.text = "Best Score: " + (int)m_highScore;
     }
 
@@ -79,20 +82,21 @@ public class Population : MonoBehaviour
     void Evolve()
     {
         generation++;
-        //System.Console.WriteLine("Generation: " + generation);
         int fittest;
-
         fittest = GetFittest();
-        //Debug.Log("Fittness: " + GetFittness());
+        m_agentsAliveText.text = "Generation: " + generation;
+
+        if (elitism)
+        {
+            SaveAgent(0, m_agents[GetFittest()].GetComponent<GameAgent>());
+        }
 
         for (int i = 0; i < m_agents.Count; i++)
         {
-            //int indexA = TournamentSelect();
-            //int indexB = TournamentSelect();
-            int indexA = rndgen.Next(0, m_agents.Count);
-            int indexB = rndgen.Next(0, m_agents.Count);
+            int indexA = TournamentSelect();
+            int indexB = TournamentSelect();
 
-            if (indexA != indexB)
+            if (indexA < m_agents.Count && indexB < m_agents.Count)
             {
                 CrossOver(m_agents[indexA].GetComponent<GameAgent>().GetNetwork(), m_agents[indexB].GetComponent<GameAgent>().GetNetwork());
             }
@@ -107,14 +111,15 @@ public class Population : MonoBehaviour
     /// <returns></returns>
     void Mutate(MLP net)
     {
+        Debug.Log("Mutating population");
         List<double> w = new List<double>();
         System.Random rndgen = new System.Random();
         w = net.GetNetworkWeights();
-        for (byte i = 0; i < net.n_input; i++)
+        for (byte i = 0; i < net.GetNetworkWeights().Count; i++)
         {
             if (rndgen.NextDouble() <= mutationRate)
             {
-                w[i] = Math.Round(rndgen.NextDouble());
+                w[i] = GetRandom(0, 2);
             }
         }
         net.SetNetworkWeights(w);
@@ -161,24 +166,29 @@ public class Population : MonoBehaviour
     /// <returns></returns>
     int TournamentSelect()
     {
-        List<int> fitnesses = new List<int>();
+        List<GameAgent> tourament = new List<GameAgent>();
 
-        for (int i = 0; i < tournamentSize; i++)
+        if (tournamentSize > m_agents.Count)
         {
-            fitnesses.Add(m_agents[i].GetComponent<GameAgent>().GetFitness());
+            tournamentSize = m_agents.Count - 1;
         }
 
-        int fittest = 0;
-        for (int i = 0; i < fitnesses.Count; i++)
+        for (byte i = 0; i < tournamentSize; i++)
         {
-            if (fitnesses[i] > fittest)
+            int id = rndgen.Next(0, m_agents.Count);
+            tourament.Add(m_agents[id].GetComponent<GameAgent>());
+        }
+
+        int fittest = tourament[0].GetFitness();
+
+        for (byte i = 0; i < tournamentSize; i++)
+        {
+            if (tourament[i].GetFitness() > fittest)
             {
                 fittest = i;
             }
         }
-        System.Random rndgen = new System.Random();
-        int num = rndgen.Next(0, size);
-        return num;
+        return fittest;
     }
 
     /// <summary>
@@ -222,8 +232,7 @@ public class Population : MonoBehaviour
     /// <param name="indiv"></param>
     public void SaveAgent(int index, GameAgent a)
     {
-        //m_agents[index] = a;
-        //m_agents[index].GetComponent<GameAgent>() = a;
+        m_agents[index] = a.gameObject;
     }
 
     void Reset()
@@ -243,8 +252,20 @@ public class Population : MonoBehaviour
         {
             m_agents[i].GetComponent<GameAgent>().Reset();
         }
-        gameObject.GetComponent<ObstableController>().Reset();
+        gameObject.GetComponent<ObstacleController>().Reset();
         agentsAlive = m_agents.Count;
         initialisedAgents = 0;
+    }
+
+    /// <summary>
+    /// Generates a random double within
+    /// the range specified
+    /// </summary>
+    /// <param name="min"></param>
+    /// <param name="max"></param>
+    /// <returns></returns>
+    public double GetRandom(double min, double max)
+    {
+        return rndgen.NextDouble() * (max - min) + min;
     }
 }

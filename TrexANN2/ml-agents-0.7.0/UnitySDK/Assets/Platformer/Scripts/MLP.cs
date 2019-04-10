@@ -61,6 +61,7 @@ public class MLP
                 for (byte k = 0; k < n_hidden; k++)
                 {
                     m_hidden_layer[i].SetInput(k, m_inputs_layer[j].GetOutput());
+                    //*(float)m_hidden_layer[i].GetWeights()[k]
                 }
             }
         }
@@ -89,7 +90,6 @@ public class MLP
             }
         }
         m_out = m_output_layer[0].GetOutput();
-        Debug.Log("Output: " + m_out);
         return m_output_layer[0].GetOutput();
     }
 

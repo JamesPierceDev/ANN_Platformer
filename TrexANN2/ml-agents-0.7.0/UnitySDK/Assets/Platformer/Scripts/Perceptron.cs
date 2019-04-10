@@ -115,7 +115,8 @@ public class Perceptron
         for (byte i = 0; i < m_input_size; i++)
         {
             //m_weights.Add(rndgen.NextDouble());
-            m_weights.Add(rndgen.Next(-4, 4));
+           //m_weights.Add(rndgen.Next(-4, 4));
+            m_weights.Add(GetRandom(0, 4));
         }
     }
 
@@ -127,9 +128,12 @@ public class Perceptron
         {
             //Return hx passed through sigmoid activation function
             hx += m_inputs[activeInputs - 1] * (float)m_weights[activeInputs - 1];
+            Debug.Log("Weight values: " + m_weights[activeInputs - 1]);
+
+            m_output = Softmax(hx);
             //m_output = Sigmoid(hx);
-            //m_output = Softmax(hx);
-            m_output = Relu(hx);
+            //m_output = Relu(hx);
+
         }
         else if (activeInputs > m_input_size)
         {
@@ -148,5 +152,17 @@ public class Perceptron
     public void Train()
     {
         //Set population to a concatenation of the weight values
+    }
+
+    /// <summary>
+    /// Generates a random double within
+    /// the range specified
+    /// </summary>
+    /// <param name="min"></param>
+    /// <param name="max"></param>
+    /// <returns></returns>
+    public double GetRandom(double min, double max)
+    {
+        return rndgen.NextDouble() * (max - min) + min;
     }
 }

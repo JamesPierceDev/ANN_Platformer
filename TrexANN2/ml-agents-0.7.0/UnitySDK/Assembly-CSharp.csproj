@@ -116,7 +116,7 @@
      <Compile Include="Assets\Scripts\DestroyOnCollision.cs" />
      <Compile Include="Assets\Scripts\GraphRenderer.cs" />
      <Compile Include="Assets\Scripts\MapController.cs" />
-     <Compile Include="Assets\Scripts\ObstableController.cs" />
+     <Compile Include="Assets\Scripts\ObstacleController.cs" />
      <None Include="Assets\ML-Agents\Plugins\Barracuda.Core\Barracuda\Resources\Experimental.compute" />
      <None Include="Assets\ML-Agents\Plugins\Barracuda.Core\Barracuda\Resources\Conv.compute" />
      <None Include="Assets\ML-Agents\Plugins\Barracuda.Core\Barracuda\Resources\Random.cginc" />

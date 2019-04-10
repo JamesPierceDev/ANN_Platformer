@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -14,9 +15,11 @@ public class GameAgent : MonoBehaviour
     public Text m_outputText;
     public bool initialised = false;
     public Slider timeSlider;
+    Vector2 m_startPosition;
 
     void Start()
     {
+        m_startPosition = transform.position;
         alive = true;
         m_net = new MLP(1, 3, 1);
         fitness = 0;
@@ -51,14 +54,13 @@ public class GameAgent : MonoBehaviour
             if (distToObstacle > 0)
             {
                 initialised = true;
-                m_net.AddInput(0, (float)distToObstacle);
+                m_net.AddInput(0, (float)Math.Tanh(distToObstacle));
                 fitness = (int)score;
                 //Add check distance to ground
                 float val = Mathf.Abs(RayCast());
                 if (m_net.GenerateOutput() > 0.5 && val < 1)
                 {
-                    Debug.Log("Jump");
-                    rb.AddForce(new Vector2(0, 150));
+                    rb.AddForce(new Vector2(0, 100));
                 }
                 m_outputText.text = "Network output: " + Mathf.Round(m_net.m_out * 100) / 100;
             }
@@ -78,6 +80,7 @@ public class GameAgent : MonoBehaviour
     {
         gameObject.SetActive(true);
         score = 0;
+        transform.position = m_startPosition;
     }
 
     /// <summary>
@@ -126,6 +129,7 @@ public class GameAgent : MonoBehaviour
         if (collision.collider.tag == "FallVolume")
         {
             gameObject.SetActive(false);
+
         }
     }
 }

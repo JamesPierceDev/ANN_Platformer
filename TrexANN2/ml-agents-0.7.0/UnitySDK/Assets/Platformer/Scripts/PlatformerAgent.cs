@@ -11,13 +11,17 @@ public class PlatformerAgent : Agent
     public float timeBetweenDecisionsAtInference;
     private float timeSinceDecision;
     private Transform startPosition;
-    private float jumpValue = 50;
+    private float jumpValue = 10;
     private float jumpThreshold = 5;
     bool grounded = true;
-
+    public GameObject obstacleController;
+    public ObstacleController ob;
+    float score = 0;
+    public Text scoreText;
     public override void InitializeAgent()
     {
         rb = gameObject.GetComponent<Rigidbody2D>();
+        ob = obstacleController.GetComponent<ObstacleController>();
         startPosition = this.transform;
 
         //Initialise jump height and threshold to random values
@@ -37,6 +41,8 @@ public class PlatformerAgent : Agent
     {
         if (brain.brainParameters.vectorActionSpaceType == SpaceType.continuous)
         {
+            score += 1 / 60f;
+            scoreText.text = "Score: " + score;
             //Jump threshold
             var actionX = vectorAction[0];
             //Jump height
@@ -45,21 +51,20 @@ public class PlatformerAgent : Agent
             //If on the ground
             if (RayCast() < 1)
             {
-               // Debug.Log("Action Y" + actionY);
-               // rb.AddForce(new Vector2(0, actionY * 50));
+                rb.AddForce(new Vector2(0, actionY));
             }
 
-            Debug.Log("Threshold: " + actionX * 10);
-            if (RayCastHorizontal() < Mathf.Abs(actionX * 10))
-            {
-                rb.AddForce(new Vector2(0, 150));
-            }
+            //if (RayCastHorizontal() < Mathf.Abs(actionX * 10))
+            //{
+            //    rb.AddForce(new Vector2(0, 150));
+            //}
 
             //If he jumps off the screen
             if (RayCast() > 30)
             {
                 AddReward(-1f);
                 Done();
+                AgentReset();
             }
 
             //If trex somehow falls off
@@ -105,25 +110,32 @@ public class PlatformerAgent : Agent
         return (float)int.MaxValue;
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.collider.tag == "Cactus")
         {
+            score = 0;
             AddReward(-1f);
             Done();
+            //AgentReset();
         }
         if (collision.collider.tag == "ClearanceVolume")
         {
             Debug.Log("Hit clearance volume");
             AddReward(1f);
-           // Done();
+        }
+        if (collision.collider.tag == "FallVolume")
+        {
+            AddReward(-1f);
+            //AgentReset();
         }
     }
 
     public override void AgentReset()
     {
         //Set agent back to starting position
-        transform.position = startPosition.position;
+        transform.position = new Vector2(startPosition.position.x, startPosition.position.y + this.GetComponent<SpriteRenderer>().size.y * 5);
+        //ob.Reset();
     }
 
 }

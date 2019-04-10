@@ -16,19 +16,17 @@ public class DestroyOnCollision : MonoBehaviour {
 
     void OnCollisionEnter2D(Collision2D col)
     {
-        Debug.Log("CollisionEnter triggered");
         if (col.collider.tag == "Agent")
         {
-            Destroy(this.gameObject);
+            //Destroy(this.gameObject);
         }
     }
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        Debug.Log("TriggerEnter triggered");
         if (other.tag == "Agent" && other.gameObject.activeSelf)
         {
-            Destroy(this.gameObject);
+          //  Destroy(this.gameObject);
         }
     }
 }
